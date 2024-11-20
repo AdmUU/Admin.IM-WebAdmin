@@ -8,28 +8,28 @@
       <li v-if="item.operation === 'divider'"><a-divider margin="8px" /></li>
       <li v-if="item.operation === 'print'">
         <div class="context-menu-item" @click="execCommand(item)">
-          <icon-printer /> <span class="ml-2">{{ item.text ?? '打印表格' }}</span>
+          <icon-printer /> <span class="ml-2">{{ item.text ?? $t("adm.printTable") }}</span>
         </div>
       </li>
       <li v-if="item.operation === 'refresh'">
         <div class="context-menu-item" @click="execCommand(item)">
-          <icon-refresh /> <span class="ml-2">{{ item.text ?? '刷新表格' }}</span>
+          <icon-refresh /> <span class="ml-2">{{ item.text ?? $t("adm.refreshTable") }}</span>
         </div>
       </li>
       <li v-if="item.operation === 'add' && showVerify('add')">
         <div class="context-menu-item" @click="execCommand(item)">
-          <icon-plus /> <span class="ml-2">{{ item.text ?? '新增数据' }}</span>
+          <icon-plus /> <span class="ml-2">{{ item.text ?? $t("adm.new") }}</span>
         </div>
       </li>
       <li v-if="item.operation === 'edit' && showVerify('edit')">
         <div class="context-menu-item" @click="execCommand(item)">
-          <icon-edit /> <span class="ml-2">{{ item.text ?? '编辑数据' }}</span>
+          <icon-edit /> <span class="ml-2">{{ item.text ?? $t("adm.edit") }}</span>
         </div>
       </li>
       <li v-if="item.operation === 'delete' && showVerify('delete')">
-        <a-popconfirm content="确实要删除此数据吗?" @ok="execCommand(item)">
+        <a-popconfirm :content="t('adm.deleteConfirm')" @ok="execCommand(item)">
           <div class="context-menu-item">
-            <icon-delete /> <span class="ml-2">{{ item.text ?? '删除数据' }}</span>
+            <icon-delete /> <span class="ml-2">{{ item.text ?? $t("adm.delete") }}</span>
           </div>
         </a-popconfirm>
       </li>
@@ -47,6 +47,9 @@
 import { ref, inject, watch, nextTick } from 'vue'
 import checkAuth from '@/directives/auth/auth'
 import { isArray } from "lodash"
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const left = ref(0)
 const top = ref(0)

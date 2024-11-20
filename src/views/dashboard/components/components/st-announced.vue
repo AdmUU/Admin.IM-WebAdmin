@@ -10,8 +10,8 @@
 <template>
   <div class="w-full lg:w-9/12 ma-content-block rounded-sm p-3 mt-3">
     <div class="flex justify-between">
-      系统公告
-      <a-link>更多</a-link>
+      {{ $t('adm.announcement') }}
+      <a-link href="/#/notice">{{ $t('adm.more') }}</a-link>
     </div>
     <a-table :data="data" :columns="columns" class="mt-2" :pagination="false">
       <template #title="{ record }">
@@ -20,14 +20,14 @@
     </a-table>
 
     <a-modal v-model:visible="detailVisible" fullscreen :footer="false">
-      <template #title>公告详情</template>
+      <template #title>{{ $t('adm.announcementDetails') }}</template>
       <a-typography :style="{ marginTop: '-30px' }">
         <a-typography-title class="text-center">
           {{ row?.title }}
         </a-typography-title>
         <a-typography-paragraph class="text-right" style="font-size: 13px; color: var(--color-text-3)">
           <a-space size="large">
-            <span>创建时间：{{ row?.created_at }}</span>
+            <span>{{ $t('adm.createTime') }}：{{ row?.created_at }}</span>
           </a-space>
         </a-typography-paragraph>
         <a-typography-paragraph>
@@ -41,11 +41,14 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import commonApi from '@/api/common';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const data = ref([])
 const columns = reactive([
-  { title: '标题', dataIndex: 'title', slotName: 'title' },
-  { title: '发布时间', dataIndex: 'created_at', width: 180, align: 'right' },
+  { title: t('adm.title'), dataIndex: 'title', slotName: 'title' },
+  { title: t('adm.publishTime'), dataIndex: 'created_at', width: 180, align: 'right' },
 ])
 
 const row = ref({})

@@ -27,27 +27,39 @@
               </a-button>
             </a-tooltip>
 
-            <a-tooltip content="管理该组配置">
+            <a-tooltip content="管理该组配置" v-if="isDevelop">
               <a-button shape="round" @click="manageConfigModal" type="primary" v-auth="['setting:config:index']">
                 <template #icon><icon-settings /></template>
               </a-button>
             </a-tooltip>
           </a-space>
         </template>
-        <a-tab-pane
-          v-for="(item, index) in configGroupData"
-          :key="`${index}-${item.id}`"
-          :title="item.name"
-        >
+        <template v-if="isDevelop">
+          <a-tab-pane
+            v-for="(item, index) in configGroupData"
+            :key="`${index}-${item.id}`"
+            :title="item.name"
+          >
+            <ma-form
+              v-if="isCreateNode"
+              v-model="formArray[item.id]"
+              :columns="optionsArray[item.id]"
+              @submit="submit"
+              class="mt-3"
+              ref="maFormRef"
+            />
+          </a-tab-pane>
+        </template>
+        <template v-else>
           <ma-form
-            v-if="isCreateNode"
-            v-model="formArray[item.id]"
-            :columns="optionsArray[item.id]"
+            v-if="isCreateNode && configGroupData.length"
+            v-model="formArray[configGroupData[0].id]"
+            :columns="optionsArray[configGroupData[0].id]"
             @submit="submit"
             class="mt-3"
             ref="maFormRef"
           />
-        </a-tab-pane>
+        </template>
       </a-tabs>
     </div>
 
@@ -80,6 +92,11 @@
   import AddGroup from './components/addGroup.vue'
   import AddConfig from './components/addConfig.vue'
   import ManageConfig from './components/manageConfig.vue'
+  import { useI18n } from "vue-i18n";
+
+  const { t } = useI18n();
+  const isDevelop = ref(import.meta.env.VITE_APP_ENV === "development");
+  isDevelop.value = false;
 
   const isCreateNode = ref(false)
   const active = ref('0-1')

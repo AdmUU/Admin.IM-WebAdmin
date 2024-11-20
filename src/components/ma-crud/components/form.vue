@@ -12,15 +12,15 @@
     :is="componentName"
     v-model:visible="dataVisible"
     :on-before-ok="submit" @cancel="close"
-    ok-text="保存"
-    cancel-text="关闭"
+    :ok-text="t('adm.save')"
+    :cancel-text="t('adm.close')"
     draggable
     :width="options.formOption.width"
     :fullscreen="options.formOption.isFull || false"
     unmount-on-close
   >
     <template #title>{{ actionTitle }}</template>
-    <a-spin :loading="dataLoading" tip="加载中..." class="w-full">
+    <a-spin :loading="dataLoading" :tip="t('adm.loading')" class="w-full">
       <ma-form v-model="form" :columns="formColumns" :options="formOptions" ref="maFormRef">
         <template v-for="slot in Object.keys($slots)" #[slot]="component">
           <slot :name="slot" v-bind="component" />
@@ -38,6 +38,9 @@ import { isArray, isFunction, get, cloneDeep, isUndefined } from 'lodash'
 import { useRouter } from 'vue-router'
 import tool from '@/utils/tool'
 import { useFormStore } from '@/store/index'
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const columns = inject('columns')
 const options = inject('options')
@@ -82,12 +85,12 @@ const submit = async () => {
     isFunction(options.afterEdit) && await options.afterEdit(response, formData)
   }
   if ( response.success ) {
-    Message.success(response.message || `${actionTitle.value}成功！`)
+    Message.success(response.message || `${actionTitle.value}`+t('adm.success'))
     emit('success', response)
     return true
   } else if ( response.success === false && (typeof response.code === "undefined" || response.code !== 200) ) {
     Message.clear()
-    Message.error(response.message || `${actionTitle.value}失败！`)
+    Message.error(response.message || `${actionTitle.value}`+t('adm.fail'))
     return false
   }
 }
@@ -97,11 +100,11 @@ const open = () => {
   init()
   if (options.formOption.viewType === 'tag' && currentAction.value !== 'see') {
     if (! options.formOption.tagId ) {
-      Message.info('未配置 tagId')
+      Message.info(t('adm.notConfig')+' tagId')
       return
     }
     if (! options.formOption.tagName ) {
-      Message.info('未配置 tagName')
+      Message.info(t('adm.notConfig')+' tagName')
       return
     }
     const config = {
@@ -145,7 +148,7 @@ const close = () => {
   form.value = {}
 }
 const add = async () => {
-  actionTitle.value = options.add.title ?? '新增'
+  actionTitle.value = options.add.title ?? t('adm.new')
   currentAction.value = 'add'
   formOptions.value['disabled'] = false
   form.value = {}
@@ -153,7 +156,7 @@ const add = async () => {
   await nextTick(() => maFormRef.value && maFormRef.value.updateOptions() )
 }
 const edit = async (data) => {
-  actionTitle.value = options.edit.title ?? '编辑'
+  actionTitle.value = options.edit.title ?? t('adm.edit')
   currentAction.value = 'edit'
   formOptions.value['disabled'] = false
   form.value = {}
@@ -170,7 +173,7 @@ const edit = async (data) => {
   await nextTick(() => maFormRef.value && maFormRef.value.updateOptions() )
 }
 const see = async (data) => {
-  actionTitle.value = options.see.title ?? '查看'
+  actionTitle.value = options.see.title ?? t('adm.view')
   currentAction.value = 'see'
   formOptions.value['disabled'] = true
   form.value = {}

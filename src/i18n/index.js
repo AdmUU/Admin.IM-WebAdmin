@@ -1,7 +1,9 @@
 import { createI18n } from 'vue-i18n'
 import tool from '@/utils/tool'
 
-const setting = tool.local.get('setting')
+const setting = tool.local.get('setting') || {
+  language: tool.getBrowserLanguage()
+}
 
 const getLanguage = () => {
   const loadFile = () => {

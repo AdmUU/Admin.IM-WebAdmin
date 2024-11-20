@@ -22,7 +22,7 @@
         :readonly="props.component.readonly"
         :read-only="props.component.readonly"
         :error="props.component.error"
-        :placeholder="props.component.placeholder ?? `请输入${props.component.title}`"
+        :placeholder="props.component.placeholder ?? `${props.component.title}`"
         :max-length="props.component.maxLength"
         :show-word-limit="props.component.showWordLimit"
         :word-length="props.component.wordLength"

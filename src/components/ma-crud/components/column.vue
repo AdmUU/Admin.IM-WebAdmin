@@ -86,22 +86,22 @@
                       :disabled="(isFunction(options.edit.disabled) ? options.edit.disabled(record) : options.edit.disabled)"
                       @click="editAction(record)"
                   >
-                    <icon-edit /> {{ options.edit.text || '编辑' }}
+                    <icon-edit /> {{ options.edit.text || t('adm.edit') }}
                   </a-link>
 
                   <a-popconfirm
-                      content="确定要恢复该数据吗?"
+                      content="t('adm.recoveryConfirm')"
                       position="bottom"
                       @ok="recoveryAction(record)"
                       v-if="(isFunction(options.recovery.show) ? options.recovery.show(record):options.recovery.show) && props.isRecovery"
                       v-auth="options.recovery.auth || []"
                       v-role="options.recovery.role || []"
                   >
-                    <a-link type="primary"><icon-undo /> {{ options.recovery.text || '恢复' }} </a-link>
+                    <a-link type="primary"><icon-undo /> {{ options.recovery.text || t('adm.recovery') }} </a-link>
                   </a-popconfirm>
 
                   <a-popconfirm
-                      content="确定要删除该数据吗?"
+                      :content="t('adm.deleteConfirm')"
                       position="bottom"
                       @ok="deleteAction(record)"
                       v-if="(isFunction(options.delete.show) ? options.delete.show(record) : options.delete.show)"
@@ -116,7 +116,7 @@
                     >
                       <icon-delete />
                       {{
-                        props.isRecovery ? options.delete.realText || '删除' : options.delete.text || '删除'
+                        props.isRecovery ? options.delete.realText || t('adm.delete') : options.delete.text || t('adm.delete')
                       }}
                     </a-link>
                   </a-popconfirm>
@@ -166,7 +166,7 @@
                 {{ get(record, row.dataIndex) }}
               </template>
               <template v-else-if="row.formType === 'upload'">
-                <a-link @click="imageSee(row, record, row.dataIndex)"><icon-image /> 查看图片</a-link>
+                <a-link @click="imageSee(row, record, row.dataIndex)"><icon-image /> {{ $t('adm.view') }}</a-link>
               </template>
               <template v-else>{{ record[row.dataIndex] }}</template>
 
@@ -193,9 +193,9 @@ import { Message } from '@arco-design/web-vue'
 import { isFunction, get, isArray, isObject } from 'lodash'
 import CustomRender from '../js/custom-render'
 import tool from '@/utils/tool'
-import commonApi from '@/api/common'
+import { useI18n } from 'vue-i18n'
 
-import formInput from '@cps/ma-form/formItem/form-input.vue'
+const { t } = useI18n()
 
 const emit = defineEmits(['refresh', 'showImage'])
 const props = defineProps({
@@ -296,12 +296,12 @@ const updateQuickEditData = async (row, record) => {
   const response = await options.edit.api(record[options.pk], record)
   row.isEdit = false
   isFunction(options.afterEdit) && await options.afterEdit(response, record)
-  Message.success(response.message || `修改成功！`)
+  Message.success(response.message || t('adm.modiSuccess'))
 }
 
 const recoveryAction = async record => {
   const response = await options.recovery.api({ ids: [record[options.pk]] })
-  response.success && Message.success(response.message || `恢复成功！`)
+  response.success && Message.success(response.message || t('adm.recoverySuccess'))
   emit('refresh')
 }
 
@@ -315,7 +315,7 @@ const deleteAction = async record => {
   if (options.afterDelete && isFunction(options.afterDelete)) {
     options.afterDelete(response, record)
   }
-  response.success && Message.success(response.message || `删除成功！`)
+  response.success && Message.success(response.message || t('adm.deleteSuccess'))
   emit('refresh')
 }
 

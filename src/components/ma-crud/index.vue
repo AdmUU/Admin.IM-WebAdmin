@@ -61,11 +61,11 @@
               @click="addAction" type="primary"
               class="w-full lg:w-auto mt-2 lg:mt-0"
             >
-              <template #icon><icon-plus /></template>{{ options.add.text || '新增' }}
+              <template #icon><icon-plus /></template>{{ options.add.text || $t("adm.new")  }}
             </a-button>
 
             <a-popconfirm
-              content="确定要删除数据吗?"
+              :content="t('adm.deleteConfirm')"
               position="bottom"
               @ok="deletesMultipleAction"
               v-if="options.delete.show && isBatch(options.delete) && options.rowSelection"
@@ -77,12 +77,12 @@
                 class="w-full lg:w-auto mt-2 lg:mt-0"
               >
                 <template #icon><icon-delete /></template>
-                {{ isRecovery ? options.delete.realText || '删除' : options.delete.text || '删除' }}
+                {{ isRecovery ? options.delete.realText || $t("adm.delete") : options.delete.text || $t("adm.delete") }}
               </a-button>
             </a-popconfirm>
 
             <a-popconfirm
-              content="确定要恢复数据吗?"
+              :content="t('adm.recoveryConfirm')"
               position="bottom"
               @ok="recoverysMultipleAction"
               v-if="options.recovery.show && isRecovery && isBatch(options.delete)"
@@ -93,7 +93,7 @@
                 type="primary" status="success"
                 class="w-full lg:w-auto mt-2 lg:mt-0"
               >
-                <template #icon><icon-undo /></template>{{ options.recovery.text || '恢复' }}</a-button>
+                <template #icon><icon-undo /></template>{{ options.recovery.text || $t("adm.recovery") }}</a-button>
             </a-popconfirm>
 
             <a-button
@@ -102,7 +102,7 @@
               v-role="options.import.role || []"
               @click="importAction"
               class="w-full lg:w-auto mt-2 lg:mt-0"
-            ><template #icon><icon-upload /></template>{{ options.import.text || '导入' }}</a-button>
+            ><template #icon><icon-upload /></template>{{ options.import.text || $t("adm.import") }}</a-button>
 
             <a-button
               v-if="options.export.show"
@@ -110,7 +110,7 @@
               v-role="options.export.role || []"
               @click="exportAction"
               class="w-full lg:w-auto mt-2 lg:mt-0"
-            ><template #icon><icon-download /></template>{{ options.export.text || '导出' }}</a-button>
+            ><template #icon><icon-download /></template>{{ options.export.text || $t("adm.export") }}</a-button>
 
             <a-button
               type="secondary"
@@ -122,7 +122,7 @@
                 <icon-expand v-if="! expandState" />
                 <icon-shrink v-else />
               </template>
-              {{ expandState ? ' 折叠' : ' 展开' }}
+              {{ expandState ? ' '+$t("adm.fold") : ' '+$t("adm.expand") }}
             </a-button>
           </slot>
           <slot name="tableAfterButtons"></slot>
@@ -130,7 +130,7 @@
         <a-space class="lg:mt-0 mt-2" v-if="options.showTools">
           <slot name="tools"></slot>
           <a-tooltip
-            :content="isRecovery ? '显示正常数据' : '显示回收站数据'"
+            :content="isRecovery ? t('adm.displayNormalData') : t('adm.displayRecycleData')"
             v-if="options.recycleApi && isFunction(options.recycleApi)"
           >
             <a-button
@@ -138,10 +138,10 @@
               @click="switchDataType"
             ><icon-swap /></a-button>
           </a-tooltip>
-          <a-tooltip content="刷新表格"><a-button shape="circle" @click="refresh"><icon-refresh /></a-button></a-tooltip>
-          <a-tooltip content="显隐搜索"><a-button shape="circle" @click="toggleSearch"><icon-search /></a-button></a-tooltip>
-          <a-tooltip content="打印表格"><a-button shape="circle" @click="printTable"><icon-printer /></a-button></a-tooltip>
-          <a-tooltip content="设置"><a-button shape="circle" @click="tableSetting"><icon-settings /></a-button></a-tooltip>
+          <a-tooltip :content="t('adm.refreshTable')"><a-button shape="circle" @click="refresh"><icon-refresh /></a-button></a-tooltip>
+          <a-tooltip :content="t('adm.searchBar')"><a-button shape="circle" @click="toggleSearch"><icon-search /></a-button></a-tooltip>
+          <a-tooltip :content="t('adm.printTable')"><a-button shape="circle" @click="printTable"><icon-printer /></a-button></a-tooltip>
+          <a-tooltip :content="t('adm.setting')"><a-button shape="circle" @click="tableSetting"><icon-settings /></a-button></a-tooltip>
         </a-space>
       </div>
       <div ref="crudContentRef">
@@ -280,6 +280,9 @@ import { isArray, isFunction, isObject, isUndefined } from 'lodash'
 import { runEvent } from '@cps/ma-form/js/event.js'
 import globalColumn from '@/config/column.js'
 import { useFormStore } from '@/store/index'
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const formStore = useFormStore()
 const props = defineProps({
@@ -647,15 +650,15 @@ const dbClickOpenEdit = (record) => {
 const importAction = () => crudImportRef.value.open()
 
 const exportAction = () => {
-  Message.info('请求服务器下载文件中...')
+  Message.info(t('adm.requestDownloadFile'))
   const data = options.value.requestParamsLabel ? requestParams.value[options.value.requestParamsLabel] : requestParams.value
   const download = (url) => request({ url, data, method: 'post', timeout: 60 * 1000, responseType: 'blob' })
 
   download(options.value.export.url).then(res => {
     tool.download(res)
-    Message.success('请求成功，文件开始下载')
+    Message.success(t('adm.startDownloading'))
   }).catch(() => {
-    Message.error('请求服务器错误，下载失败')
+    Message.error(t('adm.downloadFailed'))
   })
 }
 
@@ -670,22 +673,22 @@ const deletesMultipleAction = async () => {
     if (options.value.afterDelete && isFunction(options.value.afterDelete)) {
       options.value.afterDelete(response)
     }
-    response.success && Message.success(response.message || `删除成功！`)
+    response.success && Message.success(response.message || t('adm.deleteSuccess'))
     selecteds.value = []
     await refresh()
   } else {
-    Message.error('至少选择一条数据')
+    Message.error(t('adm.atLeastOneData'))
   }
 }
 
 const recoverysMultipleAction = async () => {
   if (selecteds.value && selecteds.value.length > 0) {
     const response = await options.value.recovery.api({ ids: selecteds.value })
-    response.success && Message.success(response.message || `恢复成功！`)
+    response.success && Message.success(response.message || t('adm.recoverySuccess'))
     selecteds.value = []
     await refresh()
   } else {
-    Message.error('至少选择一条数据')
+    Message.error(t('adm.atLeastOneData'))
   }
 }
 

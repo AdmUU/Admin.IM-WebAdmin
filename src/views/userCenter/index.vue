@@ -23,36 +23,36 @@
     <a-layout-content class="block lg:flex lg:justify-between">
       <div class="ma-content-block w-full lg:w-6/12 mt-3 p-4">
         <a-tabs type="rounded">
-          <a-tab-pane key="info" title="个人资料">
+          <a-tab-pane key="info" :title="t('adm.profile')">
             <user-infomation />
           </a-tab-pane>
-          <a-tab-pane key="safe" title="安全设置">
+          <a-tab-pane key="safe" :title="t('adm.securitySettings')">
             <modify-password />
           </a-tab-pane>
         </a-tabs>
       </div>
       <div class="ma-content-block w-full lg:w-6/12 mt-3 p-4 ml-0 lg:ml-3">
         <a-tabs type="rounded">
-          <a-tab-pane key="login-log" title="登录日志">
+          <a-tab-pane key="login-log" :title="t('adm.loginLog')">
             <a-timeline class="pl-5 mt-3"  v-if="(loginLogList && loginLogList.length)">
               <a-timeline-item
-                :label="`地理位置；${item.ip_location}，操作系统：${item.os}`"
-                v-for="(item, idx) in loginLogList"
-                :key="idx"
-              >
-                您于 {{ item.login_time }} 登录系统，{{ item.message }}
+                  :label="t('adm.ipLocation') + ` ；${item.ip_location}，` + t('adm.os') + `：${item.os} `"
+                  v-for="(item, idx) in loginLogList"
+                  :key="idx"
+                >
+                {{ item.login_time }}  <span style="margin-left:10px;">{{ item.message }}</span>
               </a-timeline-item>
             </a-timeline>
             <a-empty v-else />
           </a-tab-pane>
-          <a-tab-pane key="operation-log" title="操作日志">
+          <a-tab-pane key="operation-log" :title="t('adm.operationLog')">
             <a-timeline class="pl-5 mt-3" v-if="(operationLogList && operationLogList.length)">
               <a-timeline-item
-                :label="`地理位置；${item.ip_location}，方式：${item.method}，路由：${item.router}`"
+                :label="t('adm.ipLocation') + ` ；${item.ip_location}，` + t('adm.method') + `：${item.method}，` + t('adm.router') + `：${item.router}`"
                 v-for="(item, idx) in operationLogList"
                 :key="idx"
               >
-                您于 {{ item.created_at }} 执行了 {{ item.service_name }}
+                {{ item.created_at }} <span style="margin-left:10px;">{{ $t('adm.executed') }}</span> {{ item.service_name }}
               </a-timeline-item>
             </a-timeline>
             <a-empty v-else />
@@ -74,6 +74,9 @@
   import ModifyPassword from './components/modifyPassword.vue'
   import UserInfomation from './components/userInfomation.vue'
 
+  import { useI18n } from "vue-i18n";
+
+  const { t } = useI18n();
   const userStore = useUserStore()
   const userInfo = reactive({
     ...userStore.user
@@ -104,7 +107,7 @@
       if (newAvatar) {
         const response = await user.updateInfo({ avatar: newAvatar })
         if (response.success) {
-          Message.success('头像修改成功')
+          Message.success(t('adm.modiSuccess'))
           userStore.user.avatar = newAvatar
         }
       }

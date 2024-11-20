@@ -5,7 +5,9 @@ import tool from '@/utils/tool'
 import 'nprogress/nprogress.css'
 
 import routes from './webRouter.js'
+import i18n from '@/i18n';
 
+const { t } = i18n.global;
 const title = import.meta.env.VITE_APP_TITLE
 const defaultRoutePath = '/'
 const whiteRoute = ['login', 'mineDoc', 'interfaceList', 'interfaceCode', 'signature']
@@ -18,7 +20,8 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   NProgress.start()
   const userStore = useUserStore()
-  let toTitle = to.meta.title ? to.meta.title : to.name
+  // let toTitle = to.meta.title ? to.meta.title : to.name
+  let toTitle = t('menus.'+to.name) != 'menus.'+to.name ? t('menus.'+to.name) : to.meta.title ? to.meta.title : to.name
   document.title = `${toTitle} - ${title}`
   const token = tool.local.get(import.meta.env.VITE_APP_TOKEN_PREFIX)
   

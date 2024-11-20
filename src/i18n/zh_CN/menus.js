@@ -50,4 +50,9 @@ export default {
   'setting:crontab': '定时任务',
   'setting:table': '数据表设计器',
   'systemInterface': '系统接口',
+  
+  // Adm
+  'adm:node': '节点',
+  'adm:nodeGroup': '节点分组',
+  'undefined': '未定义',
 }

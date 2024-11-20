@@ -10,10 +10,10 @@
 <template>
   <a-form class="w-full md:w-full mt-3" :model="password" @submit="modifyPassword">
     <a-form-item
-      label="旧密码"
+      :label="t('adm.oldPassword')"
       field="oldPassword"
-      label-col-flex="80px"
-      :rules="[{ required: true, message: '旧密码必填'}]"
+      label-col-flex="120px"
+      :rules="[{ required: true, message: t('adm.oldPasswordRequired')}]"
     >
       <a-input-password
         v-model="password.oldPassword"
@@ -22,10 +22,10 @@
       />
     </a-form-item>
     <a-form-item
-      label="新密码"
+      :label="t('adm.newPassword')"
       field="newPassword"
-      label-col-flex="80px"
-      :rules="[{ required: true, message: '新密码必填'}]"
+      label-col-flex="120px"
+      :rules="[{ required: true, message: t('adm.newPasswordRequired')}]"
     >
       <a-input-password
         v-model="password.newPassword"
@@ -35,7 +35,7 @@
         allow-clear
       />
     </a-form-item>
-    <a-form-item label="密码安全" label-col-flex="80px">
+    <a-form-item :label="t('adm.passwordSecurity')" label-col-flex="120px">
       <a-progress
         :steps="3"
         status="success"
@@ -45,10 +45,10 @@
       />
     </a-form-item>
     <a-form-item
-      label="确认密码"
+      :label="t('adm.confirmPassword')"
       field="newPassword_confirmation"
-      label-col-flex="80px"
-      :rules="[{ required: true, message: '确认密码必填' }]"
+      label-col-flex="120px"
+      :rules="[{ required: true, message: t('adm.confirmPasswordRequired') }]"
     >
       <a-input-password
         allow-clear
@@ -56,14 +56,14 @@
         autocomplete="off"
       />
     </a-form-item>
-    <a-form-item label-col-flex="80px">
-      <a-button html-type="submit" type="primary">保存</a-button>
+    <a-form-item label-col-flex="120px">
+      <a-button html-type="submit" type="primary">{{ $t('adm.save') }}</a-button>
     </a-form-item>
   </a-form>
 
   <a-modal v-model:visible="visible" @ok="resetLogin">
-    <template #title>提示</template>
-    密码已经修改成功，需要重新登录系统，点击确定跳转登录页面。
+    <template #title>{{ $t('adm.hint') }}</template>
+    {{ $t('adm.passwordChangeSuccess') }}
   </a-modal>
 </template>
 
@@ -73,6 +73,9 @@
   import user from '@/api/system/user'
   import tool from '@/utils/tool'
   import { useRouter } from 'vue-router'
+  import { useI18n } from "vue-i18n";
+
+  const { t } = useI18n();
 
   const router = useRouter()
   const password = reactive({
@@ -92,7 +95,7 @@
   const modifyPassword = async (data) => {
     if (! data.errors) {
       if (data.values.newPassword !== data.values.newPassword_confirmation) {
-        Message.error('确认密码与新密码不一致')
+        Message.error(t('adm.confirmPasswordNotMatch'))
         return
       }
       const response = await user.modifyPassword(data.values)

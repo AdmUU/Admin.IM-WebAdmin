@@ -1,3 +1,5 @@
+import i18n from '@/i18n';
+const { t } = i18n.global;
 export default {
   // 当前crud组件的 id，全局唯一，不指定则随机生成一个
   id: undefined,
@@ -63,11 +65,11 @@ export default {
   // 搜索每行列数
   searchColNumber: 4,
   // 搜索提交按钮文案
-  searchSubmitButtonText: '搜索',
+  searchSubmitButtonText: t('adm.search'),
   // 搜索重置按钮文案
-  searchResetButtonText: '重置',
+  searchResetButtonText: t('adm.reset'),
   // 搜索栏加载提示文案
-  searchLoadingText: '加载数据中...',
+  searchLoadingText: t('adm.loading'),
 
   // 搜索提交前置方法
   beforeSearch: (requestParams) => {},
@@ -147,7 +149,7 @@ export default {
     // 显示新增按钮的角色
     role: [],
     // 按钮文案
-    text: '新增',
+    text: t('adm.new'),
     // 是否显示
     show: false,
   },
@@ -159,7 +161,7 @@ export default {
     // 显示编辑按钮的角色
     role: [],
     // 按钮文案
-    text: '编辑',
+    text: t('adm.edit'),
     // 是否显示
     show: false,
     // 数据来源：table(表格行数据) | api(通过接口获取数据)
@@ -178,7 +180,7 @@ export default {
     // 显示删除按钮的角色
     role: [],
     // 按钮文案
-    text: '删除',
+    text: t('adm.delete'),
     // 是否禁用，仅表格行内按钮有效
     disabled: false,
 
@@ -189,7 +191,7 @@ export default {
     // 显示真实删除按钮的角色
     realRole: [],
     // 真实按钮文案
-    realText: '删除',
+    realText: t('adm.delete'),
     // 真实删除是否禁用，仅表格行内按钮有效
     realDisabled: false,
 
@@ -206,7 +208,7 @@ export default {
     // 显示恢复按钮的角色
     role: [],
     // 按钮文案
-    text: '恢复',
+    text: t('adm.recovery'),
     // 是否显示
     show: false,
     // 是否显示批量处理按钮
@@ -218,7 +220,7 @@ export default {
     // 显示查看按钮的角色
     role: [],
     // 按钮文案
-    text: '查看',
+    text: t('adm.view'),
     // 是否显示
     show: false,
     // 数据来源：table(表格行数据) | api(通过接口获取数据)
@@ -238,7 +240,7 @@ export default {
     // 显示导入按钮的角色
     role: [],
     // 按钮文案
-    text: '导入',
+    text: t('adm.import'),
     // 是否显示
     show: false,
   },
@@ -250,7 +252,7 @@ export default {
     // 显示导出按钮的角色
     role: [],
     // 按钮文案
-    text: '导出',
+    text: t('adm.export'),
     // 是否显示
     show: false,
   },
@@ -259,7 +261,7 @@ export default {
   // 是否显示索引列
   showIndex: false,
   // 索引列名称
-  indexLabel: '序号',
+  indexLabel: t('adm.indexNO'),
   // 索引列宽度
   indexColumnWidth: 70,
   // 索引列固定方向，false 为不固定
@@ -277,7 +279,7 @@ export default {
   // 操作列宽度 (新api)
   operationColumnWidth: 160,
   // 操作列名称
-  operationColumnText: '操作',
+  operationColumnText: t('adm.operate'),
   // 操作列文字对齐方式
   operationColumnAlign: 'right',
   // 操作列固定方向，false 为不固定

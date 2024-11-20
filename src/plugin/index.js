@@ -1,8 +1,10 @@
 export default {
-  install: (Vue) => {
-    const pluginList = import.meta.glob('./*/main.js')
-    Object.keys(pluginList).forEach((path) => {
-      pluginList[path]().then(plugin => Vue.use(plugin.default || plugin))
-    })
-  }
+    install:(Vue)=>{
+       const mains= import.meta.glob('./*/main.js')
+       for (const path in mains) {
+        mains[path]().then((module) => {
+            Vue.use(module.default)
+        });
+      }
+    }
 }

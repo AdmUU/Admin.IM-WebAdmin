@@ -53,9 +53,10 @@ window.Request = request
 
 app.mount('#app')
 
-tool.capsule('MineAdmin', `v${packageJson.version} release`)
-console.log('MineAdmin 官网  https://www.mineadmin.com')
-console.log('MineAdmin 文档  https://doc.mineadmin.com')
-console.log('MineAdmin Github https://github.com/kanyxmo/MineAdmin')
-console.log('MineAdmin-Vue Github https://github.com/kanyxmo/MineAdmin-Vue')
+tool.capsule('Admin.IM', `v${import.meta.env.VITE_APP_VERSION} release`)
+console.log('Admin.IM Github https://github.com/admuu/Admin-IM')
 console.log('请不要吝啬您的 star，谢谢 ~ 🤩🤩🤩')
+
+//plugin
+import plugin from './plugin'
+app.use(plugin)

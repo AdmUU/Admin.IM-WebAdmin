@@ -50,4 +50,10 @@ export default {
   'setting:crontab': 'Crontab',
   'setting:table': 'Table Designer',
   'systemInterface': 'System Apis',
+  
+  // Adm
+  'adm:node': 'Node',
+  'adm:nodeGroup': 'Node Group',
+  'undefined': 'Undefined',
+  
   }

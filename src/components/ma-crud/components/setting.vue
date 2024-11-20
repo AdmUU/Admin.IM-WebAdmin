@@ -8,29 +8,29 @@
  - @Link   https://gitee.com/xmo/mineadmin-vue
 -->
 <template>
-  <a-drawer :visible="visible" unmountOnClose :footer="false" :width="950" @cancel="onCancel" >
+  <a-drawer :visible="visible" unmountOnClose :footer="false" :width="1050" @cancel="onCancel" >
 
-    <template #title>设置</template>
+    <template #title>{{ $t('adm.setting') }}</template>
 
     <a-space class="mt-3">
-      <span>表格大小：</span>
+      <span>{{ $t('adm.tableSize') }}：</span>
       <a-radio-group type="button" v-model="options.size">
-        <a-radio value="mini">迷你</a-radio>
-        <a-radio value="small">小</a-radio>
-        <a-radio value="medium">中</a-radio>
-        <a-radio value="large">大</a-radio>
+        <a-radio value="mini">{{ $t('adm.mini') }}</a-radio>
+        <a-radio value="small">{{ $t('adm.small') }}</a-radio>
+        <a-radio value="medium">{{ $t('adm.medium') }}</a-radio>
+        <a-radio value="large">{{ $t('adm.large') }}</a-radio>
       </a-radio-group>
-      <span class="ml-3">表格边框：</span>
+      <span class="ml-3">{{ $t('adm.tableBorder') }}：</span>
       <a-radio-group type="button" v-model="bordered" @change="changeBordered">
-        <a-radio value="hide">不显示外边框</a-radio>
-        <a-radio value="show">全部显示</a-radio>
-        <a-radio value="row">不显示行</a-radio>
-        <a-radio value="column">不显示列</a-radio>
+        <a-radio value="hide">{{ $t('adm.hideBorder') }}</a-radio>
+        <a-radio value="show">{{ $t('adm.show') }}</a-radio>
+        <a-radio value="row">{{ $t('adm.hideRow') }}</a-radio>
+        <a-radio value="column">{{ $t('adm.hideColumn') }}</a-radio>
       </a-radio-group>
-      <a-checkbox v-model="options.stripe" class="ml-3">斑马纹</a-checkbox>
+      <a-checkbox v-model="options.stripe" class="ml-3">{{ $t('adm.zebraPrint') }}</a-checkbox>
     </a-space>
 
-    <a-alert type="warning" class="mt-2">排序：本页是指当前页排序；服务器是指后台排序，若自定义服务器排序可用 <a-tag>@sorterChange</a-tag> 事件来实现</a-alert>
+    <!-- <a-alert type="warning" class="mt-2">排序：本页是指当前页排序；服务器是指后台排序，若自定义服务器排序可用 <a-tag>@sorterChange</a-tag> 事件来实现</a-alert> -->
     <a-table
       :data="allowShowColumns"
       :pagination="false"
@@ -41,15 +41,15 @@
       class="mt-3"
     >
       <template #columns>
-        <a-table-column title="列名称" data-index="title" align="center">
+        <a-table-column :title="t('adm.name')" data-index="title" align="center">
           <template #cell="{ record }">{{ record.title }}</template>
         </a-table-column>
-        <a-table-column title="宽度" data-index="width" align="center">
+        <a-table-column :title="t('adm.width')" data-index="width" align="center">
           <template #cell="{ record }">
               <a-input-number
                 v-if="! ['__index', '__operation'].includes(record.dataIndex)"
                 style="width: 150px;"
-                placeholder="列宽度"
+                :placeholder="t('adm.columnWidth')"
                 v-model="record.width"
                 mode="button"
                 @change="changeColumn($event, 'width', record.dataIndex)"
@@ -57,28 +57,28 @@
               <span v-else> / </span>
           </template>
         </a-table-column>
-        <a-table-column title="搜索隐藏" data-index="hide" align="center">
+        <a-table-column :title="t('adm.hideSearch')" data-index="hide" align="center">
           <template #cell="{ record }"><a-checkbox v-model="record.search" @change="changeColumn($event, 'search', record.dataIndex)" /></template>
         </a-table-column>
-        <a-table-column title="表格隐藏" data-index="hide" align="center">
+        <a-table-column :title="t('adm.hideTable')" data-index="hide" align="center">
           <template #cell="{ record }"><a-checkbox v-model="record.hide" @change="changeColumn($event, 'hide', record.dataIndex)" /></template>
         </a-table-column>
-        <a-table-column title="固定" data-index="fixed" align="center">
+        <a-table-column :title="t('adm.fixed')" data-index="fixed" align="center">
           <template #cell="{ record }">
             <a-space v-if="! ['__index', '__operation'].includes(record.dataIndex)">
-              <a-radio v-model="record.fixed" value="" @change="changeColumn($event, 'fixed', record.dataIndex)">无</a-radio>
-              <a-radio v-model="record.fixed" value="left" @change="changeColumn($event, 'fixed', record.dataIndex)">左</a-radio>
-              <a-radio v-model="record.fixed" value="right" @change="changeColumn($event, 'fixed', record.dataIndex)">右</a-radio>
+              <a-radio v-model="record.fixed" value="" @change="changeColumn($event, 'fixed', record.dataIndex)">{{ $t('adm.none') }}</a-radio>
+              <a-radio v-model="record.fixed" value="left" @change="changeColumn($event, 'fixed', record.dataIndex)">{{ $t('adm.left') }}</a-radio>
+              <a-radio v-model="record.fixed" value="right" @change="changeColumn($event, 'fixed', record.dataIndex)">{{ $t('adm.right') }}</a-radio>
             </a-space>
             <span v-else> / </span>
           </template>
         </a-table-column>
-        <a-table-column title="排序" data-index="order" align="center">
+        <a-table-column :title="t('adm.sorting')" data-index="order" align="center">
           <template #cell="{ record }">
             <a-space v-if="! ['__index', '__operation'].includes(record.dataIndex)" >
-              <a-radio v-model="record.__order" value="" @change="changeColumn($event, 'order', record.dataIndex)">无</a-radio>
-              <a-radio v-model="record.__order" value="page" @change="changeColumn($event, 'order', record.dataIndex)">本页</a-radio>
-              <a-radio v-model="record.__order" value="serve" @change="changeColumn($event, 'order', record.dataIndex)">服务器</a-radio>
+              <a-radio v-model="record.__order" value="" @change="changeColumn($event, 'order', record.dataIndex)">{{ $t('adm.none') }}</a-radio>
+              <a-radio v-model="record.__order" value="page" @change="changeColumn($event, 'order', record.dataIndex)">{{ $t('adm.page') }}</a-radio>
+              <a-radio v-model="record.__order" value="serve" @change="changeColumn($event, 'order', record.dataIndex)">{{ $t('adm.server') }}</a-radio>
             </a-space>
             <span v-else> / </span>
           </template>
@@ -90,6 +90,9 @@
 
 <script setup>
 import { ref, inject } from 'vue'
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const options = inject('options')
 const columns = inject('columns')

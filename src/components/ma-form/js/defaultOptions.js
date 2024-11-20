@@ -1,8 +1,10 @@
+import i18n from '@/i18n';
+const { t } = i18n.global;
 export default {
   // 是否自动初始化表单并加载字典及联动远程数据
   init: true,
   // 表单加载数据中提示文案
-  loadingText: '加载中...',
+  loadingText: t('adm.loading'),
   // 表单样式class
   customClass: [],
   // 表单控件尺寸（全局） 'mini' | 'small' | 'medium' | 'large' 
@@ -25,7 +27,7 @@ export default {
   // 提交按钮状态
   submitStatus: 'normal',
   // 提交按钮文案
-  submitText: '提交',
+  submitText: t('adm.submit'),
   // 是否显示提交按钮
   submitShowBtn: true,
 
@@ -36,7 +38,7 @@ export default {
   // 重置按钮状态
   resetStatus: 'normal',
   // 重置按钮文案
-  resetText: '重置',
+  resetText: t('adm.reset'),
   // 是否显示重置按钮
   resetShowBtn: true,
 

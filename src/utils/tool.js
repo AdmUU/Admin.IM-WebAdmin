@@ -359,4 +359,14 @@ tool.arrSum = (arr) => {
   return sum
 }
 
+tool.getBrowserLanguage = () => {
+  const language = navigator.language || navigator.browserLanguage
+  
+  if (language.toLowerCase().startsWith('zh')) {
+    return 'zh_CN'
+  } else {
+    return 'en'
+  }
+}
+
 export default tool

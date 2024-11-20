@@ -1,9 +1,11 @@
+import i18n from '@/i18n';
+const { t } = i18n.global;
 const homePageRoutes = [
   {
     name: 'dashboard',
     path: '/dashboard',
     meta: {
-      title: '仪表盘',
+      title: t('menus.dashboard'),
       icon: 'icon-dashboard',
       type: 'M',
       affix: true
@@ -13,32 +15,28 @@ const homePageRoutes = [
     name: 'userCenter',
     path: '/usercenter',
     meta: {
-      title: '个人信息',
+      title: t('menus.userCenter'),
       icon: 'icon-user',
       type: 'M',
     },
     component: () => import('@/views/userCenter/index.vue'),
-  }, {
-    name: 'message',
-    path: '/message',
-    meta: {
-      title: '消息中心',
-      icon: 'icon-message',
-      type: 'M',
-    },
-    component: () => import('@/views/userCenter/message.vue'),
-  }, {
-    name: 'store',
-    path: '/store',
-    component: () => import('@/views/appStore/index.vue'),
-    meta: { title: '应用市场', hidden: true }
   },
+  //  {
+  //   name: 'message',
+  //   path: '/message',
+  //   meta: {
+  //     title: t('menus.message'),
+  //     icon: 'icon-message',
+  //     type: 'M',
+  //   },
+  //   component: () => import('@/views/userCenter/message.vue'),
+  // }, 
 ]
 
 export const homePage = {
   name: 'home',
   path: '/home',
-  meta: { title: '首页', icon: 'icon-home', hidden: false, type: 'M' }
+  meta: { title: t('menus.dashboard'), icon: 'icon-home', hidden: false, type: 'M' }
 }
 
 export default homePageRoutes
