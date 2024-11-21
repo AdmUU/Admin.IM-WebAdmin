@@ -31,14 +31,14 @@
         <a-button
           type="outline"
           class="w-4/5"
-          @click="openPage('https://github.com/admuu/admin-im')"
+          @click="openPage('https://github.com/AdmUU/Admin.IM')"
         >Github</a-button>
       </a-card>
       <a-card class="rounded-sm text-center mt-2" :body-style="{ padding: 0 }" :bordered="false">
         <a-button
           type="outline"
           class="w-4/5"
-          @click="openPage('https://gitee.com/admuu/admin-im')"
+          @click="openPage('https://gitee.com/AdmUU/Admin.IM')"
         >Gitee </a-button>
       </a-card>
       <a-card class="rounded-sm text-center mt-2" :body-style="{ padding: 0 }" :bordered="false">

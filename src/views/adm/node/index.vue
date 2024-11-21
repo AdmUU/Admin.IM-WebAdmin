@@ -669,7 +669,7 @@ const newNodeModalData = ref({
 newNodeModalData.value.cmd = computed(() => {
   let share = newNodeModalData.value.share ? "-share yes" : "";
   let shareName = share && newNodeModalData.value.shareName ? " -sharename " + newNodeModalData.value.shareName : "";
-  return `bash <(curl -fsSL https://install.admin.im/) -a ${newNodeModalData.value.site_url} -k ${newNodeModalData.value.client_id} -s ${newNodeModalData.value.client_secret} ${share}${shareName}`;
+  return `bash <(curl -fsSL https://get.admin.im) -a ${newNodeModalData.value.site_url} -k ${newNodeModalData.value.client_id} -s ${newNodeModalData.value.client_secret} ${share}${shareName}`;
 });
 const showNewNodeModal = () => {
   newNodeModalVisible.value = true;

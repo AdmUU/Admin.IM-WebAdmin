@@ -169,5 +169,19 @@ export default {
     'content': '公告内容',
     'remark': '备注',
     'announcementContentRequired': '公告内容必填',
+        
+    'setting:site_name': '网站名称',
+    'setting:site_subtitle': '副标题',
+    'setting:site_url': '网站地址',
+    'setting:site_url_placeholder': '用户访问网址，包含http(s)://。如：https://admin.im',
+    'setting:site_logo': 'Logo',
+    'setting:site_copyright': '版权',
+    'setting:site_record_number': '备案号',
+    'setting:site_language': '语言',
+    'setting:index_banner': 'Banner',
+    'setting:index_banner_placeholder': '首页顶部横幅的HTML代码。不支持JavaScript。',
+    'setting:upload_mode': '上传模式',
+    'setting:upload_allow_file': '允许文件类型',
+    'setting:upload_allow_image': '允许图片格式',
 
 };

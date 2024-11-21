@@ -49,12 +49,17 @@ app.config.globalProperties.$tool = tool
 app.config.globalProperties.$common = common
 app.config.globalProperties.$title = import.meta.env.VITE_APP_TITLE
 app.config.globalProperties.$url = import.meta.env.VITE_APP_BASE
+app.config.globalProperties.$version = import.meta.env.VITE_APP_VERSION
 window.Request = request
 
 app.mount('#app')
 
-tool.capsule('Admin.IM', `v${import.meta.env.VITE_APP_VERSION} release`)
-console.log('Admin.IM Github https://github.com/admuu/Admin-IM')
+const appVersion = /^\d/.test(app.config.globalProperties.$version) 
+  ? 'v' + app.config.globalProperties.$version
+  : app.config.globalProperties.$version
+  
+tool.capsule('Admin.IM', `${appVersion} release`)
+console.log('Admin.IM Github https://github.com/AdmUU/Admin.IM')
 console.log('请不要吝啬您的 star，谢谢 ~ 🤩🤩🤩')
 
 //plugin

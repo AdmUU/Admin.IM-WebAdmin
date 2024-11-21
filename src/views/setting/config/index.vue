@@ -148,7 +148,9 @@
     let form = {}
     optionsArray.value[id] = response.data.map(item => {
       let option = {
-        title: item.name, dataIndex: item.key, formType: item.input_type,
+        title: t('adm.setting:' + item.key) == 'adm.setting:' + item.key ? item.name : t('adm.setting:' + item.key),
+        placeholder: item.key == 'index_banner' ? t('adm.setting:index_banner_placeholder') : item.key == 'site_url' ? t('adm.setting:site_url_placeholder') : item.name,
+        dataIndex: item.key, formType: item.input_type,
         dict: {}, labelWidth: '120px', extra: item.remark, tooltip: item.key,
       }
       const allowDictType = ['select', 'radio', 'checkbox']

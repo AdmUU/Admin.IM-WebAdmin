@@ -55,4 +55,5 @@ export default {
   'adm:node': '节点',
   'adm:nodeGroup': '节点分组',
   'undefined': '未定义',
+  'login': '登录',
 }

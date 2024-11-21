@@ -55,5 +55,6 @@ export default {
   'adm:node': 'Node',
   'adm:nodeGroup': 'Node Group',
   'undefined': 'Undefined',
+  'login': 'Login',
   
   }

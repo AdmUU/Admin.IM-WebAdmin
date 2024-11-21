@@ -170,4 +170,18 @@ export default {
     'remark': 'Remark',
     'announcementContentRequired': 'Announcement content is required',
     
+    'setting:site_name': 'Site Name',
+    'setting:site_subtitle': 'Subtitle',
+    'setting:site_url': 'Site URL',
+    'setting:site_url_placeholder': 'The URL visited by the user contains the http(s):// protocol. For example: https://admin.im',
+    'setting:site_logo': 'Site Logo',
+    'setting:site_copyright': 'Copyright',
+    'setting:site_record_number': 'ICP No.',
+    'setting:site_language': 'Language',
+    'setting:index_banner': 'Banner',
+    'setting:index_banner_placeholder': 'Banner HTML code at the top of the homepage. JavaScript is not supported.',
+    'setting:upload_mode': 'Upload Mode',
+    'setting:upload_allow_file': 'Allow Files',
+    'setting:upload_allow_image': 'Allow Images',
+    
 };
